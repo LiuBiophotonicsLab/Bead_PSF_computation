@@ -9,7 +9,7 @@ To run, open PSF_notebook.ipynb as a Jupyter notebook and follow the instruction
 This package was originally written by [Nicholas Sofroniew](https://github.com/sofroniewn/psf) (Chan Zuckerberg Initiative), and edited by [Adam Glaser](https://github.com/adamkglaser) and [Kevin Bishop](https://github.com/kevinwbishop) (University of Washington).
 
 
-### installation
+### Installation
 
 ```bash
 git clone https://github.com/kevinwbishop/Bead_PSF_computation
