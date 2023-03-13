@@ -1,0 +1,23 @@
+# axes.titlesize: large
+# axes.labelsize: medium
+lines.markersize: 3
+# xtick.labelsize: medium
+# ytick.labelsize: medium
+# figure.figsize   :8, 6
+
+# font.family         : sans-serif
+# font.sans-serif: DejaVu Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif
+
+# axes.linewidth      : 1.0     # edge linewidth
+
+# xtick.major.width    : 0.5    # major tick width in points
+# ytick.major.width    : 0.5    # major tick width in points
+
+# savefig.bbox        : standard    # 'tight' or 'standard'.
+# savefig.pad_inches  : 0.1      # Padding to be used when bbox is set to 'tight'
+
+# figure.dpi       : 80
+# savefig.dpi      : 300
+
+# savefig.transparent : False     # setting that controls whether figures are saved with a
+#                                # transparent background by default
