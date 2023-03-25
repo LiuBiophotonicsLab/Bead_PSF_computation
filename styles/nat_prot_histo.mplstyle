@@ -18,7 +18,7 @@ savefig.bbox        : standard    # 'tight' or 'standard'.
 savefig.pad_inches  : 0.1      # Padding to be used when bbox is set to 'tight'
 
 figure.subplot.left    : 0.2  # the left side of the subplots of the figure
-figure.subplot.right   : 0.95    # the right side of the subplots of the figure
+figure.subplot.right   : 0.93    # the right side of the subplots of the figure
 # use 0.2 / 0.95 for small histo, 0.15 / 0.93 for small heat
 
 figure.subplot.bottom  : 0.2    # the bottom of the subplots of the figure
