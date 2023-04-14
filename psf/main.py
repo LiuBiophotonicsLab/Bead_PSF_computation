@@ -73,7 +73,7 @@ def volume(im, center, window):
 
 def findBeads(im, window, thresh):
     print('Smoothing...')
-    smoothed = gaussian_filter(im, 1, output=None, mode='nearest', cval=0, multichannel=None)
+    smoothed = gaussian_filter(im, 1, output=None, mode='nearest', cval=0, channel_axis=None)
     print('Finding centers...')
     centers = peak_local_max(smoothed, min_distance=3, threshold_rel=thresh, exclude_border=True)
     return centers, smoothed.max(axis=0)
