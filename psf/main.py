@@ -102,11 +102,19 @@ def getPSF(bead, XYZ, initial_guess, lower_bounds, upper_bounds, options):
 
     bead = bead/numpy.max(bead)
     
-    popt, pcov = opt.curve_fit(gaussian_3D, XYZ, 
-                            bead.ravel(), p0 = initial_guess,
-                            bounds = (lower_bounds, upper_bounds))
+    if options['rotation']:
+        popt, pcov = opt.curve_fit(gaussian_3D_rot, XYZ, 
+                                bead.ravel(), p0 = initial_guess,
+                                bounds = (lower_bounds, upper_bounds))
 
-    xo, yo, zo, sigma_x, sigma_y, sigma_z, amplitude, offset, rotx, roty, rotz = popt[0], popt[1], popt[2], popt[3], popt[4], popt[5], popt[6], popt[7], popt[8], popt[9], popt[10]
+        xo, yo, zo, sigma_x, sigma_y, sigma_z, amplitude, offset, rotx, roty, rotz = popt[0], popt[1], popt[2], popt[3], popt[4], popt[5], popt[6], popt[7], popt[8], popt[9], popt[10]
+        
+    else:
+        popt, pcov = opt.curve_fit(gaussian_3D, XYZ, 
+                                bead.ravel(), p0 = initial_guess[0:8],
+                                bounds = (lower_bounds[0:8], upper_bounds[0:8]))
+
+        xo, yo, zo, sigma_x, sigma_y, sigma_z, amplitude, offset = popt[0], popt[1], popt[2], popt[3], popt[4], popt[5], popt[6], popt[7]
 
     perr = numpy.sqrt(numpy.diag(pcov))
 
@@ -118,7 +126,11 @@ def getPSF(bead, XYZ, initial_guess, lower_bounds, upper_bounds, options):
     FWHM_y = numpy.abs(4*sigma_y*numpy.sqrt(-0.5*numpy.log(0.5)))/options['pxPerUmLat']
     FWHM_z = numpy.abs(4*sigma_z*numpy.sqrt(-0.5*numpy.log(0.5)))/options['pxPerUmAx']
 
-    data = DataFrame([FWHM_x, FWHM_y, FWHM_z, x_perr, y_perr, z_perr, rotx, roty, rotz], index = ['FWHM_x', 'FWHM_y', 'FWHM_z', 'x_perr', 'y_perr', 'z_perr', 'rotx', 'roty', 'rotz']).T
+    if options['rotation']:
+        data = DataFrame([FWHM_x, FWHM_y, FWHM_z, x_perr, y_perr, z_perr, rotx, roty, rotz], index = ['FWHM_x', 'FWHM_y', 'FWHM_z', 'x_perr', 'y_perr', 'z_perr', 'rotx', 'roty', 'rotz']).T
+        
+    else:
+        data = DataFrame([FWHM_x, FWHM_y, FWHM_z, x_perr, y_perr, z_perr], index = ['FWHM_x', 'FWHM_y', 'FWHM_z', 'x_perr', 'y_perr', 'z_perr']).T            
 
     return data
 
@@ -133,10 +145,16 @@ def nearest(x,centers):
     z = [dist(x,y) for y in centers if not (x == y).all()]
     return abs(array(z)).min(axis=0)
 
-def gaussian_3D(XYZ, xo, yo, zo, sigma_x, sigma_y, sigma_z, amplitude, offset, rotx, roty, rotz):
+def gaussian_3D(XYZ, xo, yo, zo, sigma_x, sigma_y, sigma_z, amplitude, offset):
 
-    # Function to fit, returns 2D gaussian function as 1D array
+    # Function to fit, returns 3D gaussian function as 1D array
+    g = offset + amplitude*numpy.exp(-(((XYZ[0]-xo)**2)/(2*sigma_x**2) + ((XYZ[1]-yo)**2)/(2*sigma_y**2) + ((XYZ[2]-zo)**2)/(2*sigma_z**2)))
 
+    return g.ravel()
+
+def gaussian_3D_rot(XYZ, xo, yo, zo, sigma_x, sigma_y, sigma_z, amplitude, offset, rotx, roty, rotz):
+
+    # Function to fit, returns 3D gaussian function with rotation as 1D array
     XRot = numpy.array([[1, 0, 0], [0, numpy.cos(rotx),  numpy.sin(rotx)],[0, -numpy.sin(rotx), numpy.cos(rotx)]])
 
     YRot = numpy.array([[numpy.cos(roty), 0, -numpy.sin(roty)], [0, 1, 0],[numpy.sin(roty), 0, numpy.cos(roty)]])
