@@ -71,12 +71,19 @@ def volume(im, center, window):
         volume = volume/volume.max()
         return volume
 
-def findBeads(im, window, thresh):
+def findBeads(im, window, thresh, thresh_mode='rel',min_dist=3):
     print('Smoothing...')
     smoothed = gaussian_filter(im, 1, output=None, mode='nearest', cval=0, channel_axis=None)
+    print('Smoothed max: ', smoothed.max())
     print('Finding centers...')
-    centers = peak_local_max(smoothed, min_distance=3, threshold_rel=thresh, exclude_border=True)
-    return centers, smoothed.max(axis=0)
+    if thresh_mode == 'rel':
+        centers = peak_local_max(smoothed, min_distance=min_dist, threshold_rel=thresh, exclude_border=True)
+    elif thresh_mode == 'abs':
+        print('threshold_abs:',thresh)
+        centers = peak_local_max(smoothed, min_distance=min_dist, threshold_abs=thresh, exclude_border=True)
+    else:
+        raise Exception('Invalid thresh_mode. Must be abs or rel')
+    return centers, smoothed
 
 def keepBeads(im, window, centers, options):
     centersM = asarray([[x[0]/options['pxPerUmAx'], x[1]/options['pxPerUmLat'], x[2]/options['pxPerUmLat']] for x in centers])
@@ -89,7 +96,7 @@ def keepBeads(im, window, centers, options):
 def getCenters(im, options):
     window = [options['windowUm'][0]*options['pxPerUmAx'], options['windowUm'][1]*options['pxPerUmLat'], options['windowUm'][2]*options['pxPerUmLat']]
     window = [round(x) for x in window]
-    centers, smoothed = findBeads(im, window, options['thresh'])
+    centers, smoothed = findBeads(im, window, options['thresh'],thresh_mode=options['thresh_mode'],min_dist=options['min_dist'])
     print('Found ' + str(len(centers)) + ' beads')
     centers = keepBeads(im, window, centers, options)
     print('Keeping ' + str(len(centers)) + ' beads')
