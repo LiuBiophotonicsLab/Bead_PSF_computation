@@ -40,6 +40,7 @@ def compute(im, options):
 
     print('Found bounds')
     
+    # this line might be causing problems - see documentation for meshgrid, seems x and z would flip with default indexing
     X, Z, Y = numpy.meshgrid(x, z, y)
 
     print('Computing PSFs...')
