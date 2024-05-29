@@ -1,0 +1,28 @@
+axes.titlesize: 7
+axes.labelsize: 7
+lines.markersize: 1
+xtick.labelsize: 7
+ytick.labelsize: 7
+figure.figsize   : 3.5, 1.5
+
+font.family         : sans-serif
+font.sans-serif: Arial, DejaVu Sans, Lucida Grande, Verdana, Geneva, Lucid, Helvetica, Avant Garde, sans-serif
+
+axes.linewidth      : 0.5     # edge linewidth
+
+xtick.major.width    : 0.5    # major tick width in points
+ytick.major.width    : 0.5    # major tick width in points
+
+savefig.bbox        : standard    # 'tight' or 'standard'.
+savefig.pad_inches  : 0.1      # Padding to be used when bbox is set to 'tight'
+
+figure.subplot.left    : 0.125  # the left side of the subplots of the figure
+figure.subplot.right   : 0.95    # the right side of the subplots of the figure
+figure.subplot.bottom  : 0.2    # the bottom of the subplots of the figure
+figure.subplot.top     : 0.9    # the top of the subplots of the fig
+
+figure.dpi       : 80
+savefig.dpi      : 300
+
+savefig.transparent : True     # setting that controls whether figures are saved with a
+                               # transparent background by default
