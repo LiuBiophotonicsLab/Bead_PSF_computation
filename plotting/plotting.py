@@ -171,19 +171,21 @@ def plot_scatter_heat(h_ax,
                       save_name,
                       data_base_path,
                       data_in,
-                      sampling,
+                      h_sampling,
+                      v_sampling,
                       save_plot=True,
-                      h_label='',
-                      v_label='',
-                      c_label='',
+                      h_label=None,
+                      v_label=None,
+                      c_label=None,
                       plot_title='',
-                      clim=[],
-                      hlim=[],
-                      vlim=[],
-                      hticks=[],
-                      vticks=[],
+                      clim=None,
+                      hlim=None,
+                      vlim=None,
+                      hticks=None,
+                      vticks=None,
+                      cticks=None,
                       percentile_lim=[0.1,99.9],
-                      base_map='',
+                      base_map=None,
                       equal=False
                      ):
         
@@ -244,7 +246,7 @@ def plot_scatter_heat(h_ax,
         
     """  
     
-    if base_map == '':
+    if base_map == None:
         # to use built-in colormaps, uncomment line below
         base_map = mpl.colormaps['coolwarm']
         # base_map = cm.batlow
@@ -255,7 +257,7 @@ def plot_scatter_heat(h_ax,
     data_in = data_in.drop(data_in[(data_in[color_ax] < min_cutoff) | (data_in[color_ax] > max_cutoff)].index)
 
     # use autoscaled colormap (recommended)
-    if clim == []:
+    if clim == None:
 
         # find colormap range to center map at median data value
         med_val = np.median(data_in[color_ax])
@@ -286,40 +288,42 @@ def plot_scatter_heat(h_ax,
 
     #fig = plt.figure()
     #ax = fig.add_axes([0.1,0.1,0.8,0.8])
-    plt.scatter(data_in[h_ax]*sampling,
-                data_in[v_ax]*sampling,
+    plt.scatter(data_in[h_ax]*h_sampling,
+                data_in[v_ax]*v_sampling,
                 marker='.',
                 c=data_in[color_ax],
                 cmap=cmp)
     cbar = plt.colorbar(format='%0.1f')
     
     # use explicitly definied colormap range
-    if not clim == []:
+    if clim != None:
         plt.clim(clim)
+    if cticks != None:
+        cbar.set_ticks(cticks)
         
     # update labels
-    if c_label == '':
+    if c_label == None:
         c_label = color_ax + ' (μm)'
     cbar.set_label(c_label)
     
-    if h_label == '':
+    if h_label == None:
         h_label = h_ax + ' (μm)'
     plt.xlabel(h_label)
 
-    if v_label == '':
+    if v_label == None:
         v_label = v_ax + ' (μm)'
     plt.ylabel(v_label)
         
     plt.title(plot_title)
     
     # set axis bounds
-    if hlim != []:
+    if hlim != None:
         plt.xlim(hlim)
-    if vlim != []:
+    if vlim != None:
         plt.ylim(vlim)
-    if hticks != []:
+    if hticks != None:
         ax.xaxis.set_ticks(hticks)
-    if vticks != []:
+    if vticks != None:
         ax.yaxis.set_ticks(vticks)
 
     # save plot
@@ -337,7 +341,8 @@ def plot_avg_fit(h_ax,
                  data_base_path,
                  data_in,
                  save_plot=True,
-                 grid_dim=300):
+                 grid_dim=300,
+                 axis=False):
     
     """
     2D plot of average Gaussian fit (i.e. a 2D slide of the 3D Gaussian function).
@@ -418,7 +423,8 @@ def plot_avg_fit(h_ax,
     
     fig,ax = plt.subplots()
     ax.imshow(g, cmap='gray');
-    ax.axis('off');
+    if not axis:
+        ax.axis('off');
     
     # save plot
     if save_plot:
