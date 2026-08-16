@@ -4,7 +4,7 @@ This software can be used to compute the PSF of an optical sectioning microscope
 
 Note that computing the PSFs from the 3D image volume can take a long time (several hours for a few thousand beads). Once you compute the PSFs once, you can load in the results from the .csv again later to more quickly generate new visualizations. 
 
-This software is based on a package by [Nicholas Sofroniew](https://github.com/sofroniewn/psf) (Chan Zuckerberg Initiative), and edited by [Adam Glaser](https://github.com/adamkglaser) and [Kevin Bishop](https://github.com/kevinwbishop) (University of Washington).
+This software is based on a package by [Nicholas Sofroniew](https://github.com/sofroniewn/psf) (Chan Zuckerberg Initiative) adapted by [Adam Glaser](https://github.com/adamkglaser) and [Kevin Bishop](https://github.com/kevinwbishop) (University of Washington).
 
 
 ### System requirements
