@@ -1,4 +1,4 @@
-# Bead_PSF_computation
+# Bead PSF computation
 
 This software can be used to compute the PSF of an optical sectioning microscope (e.g. light-sheet) from a 3D image volume of diffraction limited beads. It locates well-separated beads and then fits a 2D Gaussian function to the maximum projection of the bead. The location and PSF dimenisons of each bead are saved as a .csv file. Various visualization functions allow the PSF to be characterized with respect to imaging depth, field position, etc.
 
