@@ -6,6 +6,14 @@ Note that computing the PSFs from the 3D image volume can take a long time (seve
 
 This software is based on a package by [Nicholas Sofroniew](https://github.com/sofroniewn/psf) (Chan Zuckerberg Initiative) adapted by [Adam Glaser](https://github.com/adamkglaser) and [Kevin Bishop](https://github.com/kevinwbishop) (University of Washington).
 
+### Publication & citation
+
+For more details, please [see our paper in Nature Protocols](https://doi.org/10.1038/s41596-023-00934-4)
+
+This paper includes additional example plots, a protocol for making and imaging agarose bead phantoms to generate bead PSF datasets, and details on using bead results to optimize microscope alignment.
+
+If you find this package helpful, please cite the paper above in your publication - thank you!
+
 
 ### System requirements
 This package is written in Python and run as a Jupyter Notebook. Users should install Anaconda (tested on Conda 4.3.30, Python 3.9.16, Windows 10).
